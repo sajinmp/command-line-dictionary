@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'time'
 require 'bundler/setup'
 Bundler.require(:default)
 
@@ -12,22 +13,23 @@ Dir.glob(project_root + '/functions/*', &method(:require))
 
 args = ARGV
 if args.empty?
-  game()
+  word_of_the_day()
 else
   case args[0]
   when 'def'
-    definitions(args[1])
+    res = definition(args[1])
   when 'syn'
-    synonym(args[1])
+    res = synonym(args[1])
   when 'ant'
-    antonym(args[1])
+    res = antonym(args[1])
   when 'ex'
-    example(args[1])
+    res = example(args[1])
   when 'play'
     game()
   when 'dict'
-    details(args[1])
+    detail(args[1])
   else
-    details(args[0])
+    detail(args[0])
   end
+  output(res)
 end

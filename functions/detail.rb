@@ -1,0 +1,10 @@
+def detail(myword)
+  defs = definition(myword)
+  syns = synonym(myword)
+  ants = antonym(myword)
+  exs = example(myword)
+  output(defs)
+  output(syns)
+  output(ants)
+  output(exs)
+end

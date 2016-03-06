@@ -1,6 +1,10 @@
-def definitions(myword)
+def definition(myword)
   res = Wordnik.word.get_definitions(myword, limit: 10)
-  res.each_with_index do |i, index|
-    puts "#{index + 1}. #{i['text']}"
+  op = []
+  unless res.empty?
+    res.each_with_index do |i, index|
+      op << i['text']
+    end
   end
+  return [op, myword, 'definitions']
 end
