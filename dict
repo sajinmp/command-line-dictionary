@@ -18,12 +18,16 @@ else
   case args[0]
   when 'def'
     res = definition(args[1])
+    output(res)
   when 'syn'
     res = synonym(args[1])
+    output(res)
   when 'ant'
     res = antonym(args[1])
+    output(res)
   when 'ex'
     res = example(args[1])
+    output(res)
   when 'play'
     game()
   when 'dict'
@@ -31,5 +35,4 @@ else
   else
     detail(args[0])
   end
-  output(res)
 end
