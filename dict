@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+Bundler.require(:default)
+
+Wordnik.configure do |config|
+  config.api_key = '0cb0ee5c77250abd8700604ac2b017d9830971bcb316088f8'
+end
+
+project_root = File.dirname(File.absolute_path(__FILE__))
+Dir.glob(project_root + '/functions/*', &method(:require))
+
+args = ARGV
+if args.empty?
+  game()
+else
+  case args[0]
+  when 'def'
+    definitions(args[1])
+  when 'syn'
+    synonym(args[1])
+  when 'ant'
+    antonym(args[1])
+  when 'ex'
+    example(args[1])
+  when 'play'
+    game()
+  when 'dict'
+    details(args[1])
+  else
+    details(args[0])
+  end
+end
