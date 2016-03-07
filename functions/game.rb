@@ -8,11 +8,10 @@ def to_my_hash(arr)
   return h
 end
 
-def show_hints(arr)
-end
-
 def game
-  word = Wordnik.words.get_random_word['word']
+  query = { api_key: $api_key }
+  word = HTTParty.get('http://api.wordnik.com:80/v4/words.json/randomWord', query: query)['word']
+  puts word
   defs = definition(word)[0]
   syns = synonym(word)[0]
   ants = antonym(word)[0]
@@ -28,11 +27,11 @@ def game
   puts 'Definition'
   defs[defs.keys[0]] = 1
   puts defs.keys[0]
-  show_hints(defs)
   print 'Enter word : '
   entry = STDIN.gets.chomp
-  while entry.downcase != word.downcase 
+  while entry.downcase != word.downcase and !syns.select { |k, v| v == 0 }.keys.map(&:downcase).include?(entry)
     puts "1. Try again\n2. Hint\n3. Exit"
+    print 'Enter choice : '
     choice = STDIN.gets.chomp.to_i
     case choice
     when 1
@@ -57,20 +56,28 @@ def game
             puts 'Hint - Antonym'
             puts new
           else
-            puts 'Sorry! Out of hints'
+            puts 'Hint - Shuffled word'
+            puts word.split('').shuffle.join
           end
         end
       end
+      print 'Enter word : '
+      entry = STDIN.gets.chomp
     when 3
       flag = 1
       break
     end
   end
+  system('clear')
   if flag == 1
     puts 'Sorry better luck next time'
     puts 'The word was ' + word
   else
-    puts 'Congratulations, You got the word'
+    if entry.downcase == word.downcase
+      puts 'Congratulations, You got the word'
+    else
+      puts 'Congratulations, You got a synonym of the word'
+    end
   end
   output([defs.keys, word, 'definitions'])
   output([syns.keys, word, 'synonyms'])

@@ -1,12 +1,11 @@
 #!/usr/bin/env ruby
 
 require 'time'
+require 'uri'
 require 'bundler/setup'
 Bundler.require(:default)
 
-Wordnik.configure do |config|
-  config.api_key = '0cb0ee5c77250abd8700604ac2b017d9830971bcb316088f8'
-end
+$api_key = '0cb0ee5c77250abd8700604ac2b017d9830971bcb316088f8'
 
 project_root = File.dirname(File.absolute_path(__FILE__))
 Dir.glob(project_root + '/functions/*', &method(:require))

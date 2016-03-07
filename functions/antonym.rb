@@ -1,5 +1,6 @@
 def antonym(myword)
-  res = Wordnik.word.get_related(myword, type: 'antonym', limit: 10)
+  query = { relationshipTypes: 'antonym', limitPerRelationshipType: 10, api_key: $api_key }
+  res = HTTParty.get("http://api.wordnik.com:80/v4/word.json/#{URI.escape(myword)}/relatedWords", query: query)
   op = []
   unless res.empty?
     res[0]['words'].each_with_index do |i, index|

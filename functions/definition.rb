@@ -1,5 +1,6 @@
 def definition(myword)
-  res = Wordnik.word.get_definitions(myword, limit: 10)
+  query = { limit: 10, api_key: $api_key }
+  res = HTTParty.get("http://api.wordnik.com:80/v4/word.json/#{URI.escape(myword)}/definitions", query: query)
   op = []
   unless res.empty?
     res.each_with_index do |i, index|

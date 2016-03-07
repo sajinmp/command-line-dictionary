@@ -1,4 +1,5 @@
 def word_of_the_day
-  res = Wordnik.words.get_word_of_the_day(date: Time.now.to_date)
+  query = { date: Time.now.to_date, api_key: $api_key }
+  res = HTTParty.get('http://api.wordnik.com:80/v4/words.json/wordOfTheDay', query: query)
   detail(res['word'])
 end
