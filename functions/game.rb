@@ -9,9 +9,8 @@ def to_my_hash(arr)
 end
 
 def game
-  query = { api_key: $api_key }
+  query = { minDictionaryCount: 100, api_key: $api_key }
   word = HTTParty.get('http://api.wordnik.com:80/v4/words.json/randomWord', query: query)['word']
-  puts word
   defs = definition(word)[0]
   syns = synonym(word)[0]
   ants = antonym(word)[0]
